@@ -191,6 +191,11 @@ func (c *ChainConfig) IsByzantium(num *big.Int) bool {
 	return isForked(c.ByzantiumBlock, num)
 }
 
+func (c *ChainConfig) IsPerinthos(num *big.Int) bool {
+	// return isForked(c.PerinthosBlock, num)
+	return true
+}
+
 // GasTable returns the gas table corresponding to the current phase (homestead or homestead reprice).
 //
 // The returned GasTable's fields shouldn't, under any circumstances, be changed.

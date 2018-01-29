@@ -38,6 +38,7 @@ import (
 var (
 	FrontierBlockReward    *big.Int = big.NewInt(5e+18) // Block reward in wei for successfully mining a block
 	ByzantiumBlockReward   *big.Int = big.NewInt(3e+18) // Block reward in wei for successfully mining a block upward from Byzantium
+	PerinthosBlockReward   *big.Int = big.NewInt(1e+18) // Block reward in wei for successfully mining a block upward from Perinthos
 	maxUncles                       = 2                 // Maximum number of uncles allowed in a single block
 	allowedFutureBlockTime          = 15 * time.Second  // Max time from current time allowed for blocks, before they're considered future blocks
 )
@@ -540,7 +541,9 @@ var (
 func accumulateRewards(config *params.ChainConfig, state *state.StateDB, header *types.Header, uncles []*types.Header) {
 	// Select the correct block reward based on chain progression
 	blockReward := FrontierBlockReward
-	if config.IsByzantium(header.Number) {
+	if config.IsPerinthos(header.Number) {
+		blockReward = PerinthosBlockReward
+	} else if config.IsByzantium(header.Number) {
 		blockReward = ByzantiumBlockReward
 	}
 	// Accumulate the rewards for the miner and any included uncles
